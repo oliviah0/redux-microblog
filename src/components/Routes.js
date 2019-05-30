@@ -12,7 +12,7 @@ class Routes extends Component {
       <Switch>
         <Route exact path="/" render={() => <HomeContainer />} />
         <Route exact path="/new" render={(props) => <PostFormContainer {...props} />} />
-        <Route exact path="/:id" render={(props) => <PostContainer {...props}/>} />
+        <Route exact path="/:id" render={(props) => <PostContainer {...props} />} />
         <Redirect to="/" />
       </Switch>
     );

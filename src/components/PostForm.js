@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-// import "./PostForm.css";
+// import { Redirect } from "react-router-dom";
 
 class PostForm extends Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -23,12 +20,12 @@ class PostForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log("WE SUBMITTED FORM", this.props)
 
-    // check if we came from editing post page
+    // determine how to process add new or edit post
     if (this.props.isEditingPost) {
-      // untoggle form, if editing and stay on post page
-      this.props.editPost(this.state)
+      this.props.editPost(this.state);
+
+      // TODO: figure out how to rerender the page to untoggle form area on post and updated content
       window.location.reload();
       // <Redirect to = {`/${this.props.id}`} />
       // this.props.history.push(`/${this.props.id}`);
@@ -40,11 +37,13 @@ class PostForm extends Component {
   }
 
   render() {
-    let title = this.props.isEditingPost ? "Edit Post" : "New Post";
+    let { title, description, body } = this.state;
+    let formTitle = this.props.isEditingPost ? "Edit Post" : "New Post";
+
     return (
       <div>
 
-        <h3 className="mb-4">{title}</h3>
+        <h3 className="mb-4">{formTitle}</h3>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
@@ -54,7 +53,7 @@ class PostForm extends Component {
               name="title"
               placeholder="Enter a title"
               onChange={this.handleChange}
-              value={this.state.title}
+              value={title}
             />
           </div>
           <div className="form-group">
@@ -65,7 +64,7 @@ class PostForm extends Component {
               name="description"
               placeholder="description"
               onChange={this.handleChange}
-              value={this.state.description}
+              value={description}
             />
           </div>
           <div className="form-group">
@@ -75,13 +74,13 @@ class PostForm extends Component {
               id="body"
               name="body"
               onChange={this.handleChange}
-              value={this.state.body}
+              value={body}
             />
           </div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
-  );
+    );
   }
 }
 

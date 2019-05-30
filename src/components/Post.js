@@ -9,59 +9,75 @@ class Post extends Component {
     super(props);
     this.state = {
       showEdit: false
-    }
+    };
     this.showForm = this.showForm.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
+    this.handleRemovePost = this.handleRemovePost.bind(this);
   }
 
   showForm() {
-    this.setState({ showEdit: !this.state.showEdit })
+    this.setState({ showEdit: !this.state.showEdit });
   }
 
-  handleRemove(){
-    console.log('i fired')
-    this.props.removePost(this.props.id)
-    this.props.history.push('/')
+  handleRemovePost() {
+    this.props.removePost(this.props.id);
+    this.props.history.push('/');
   }
 
   render() {
+    let { title, body, description } = this.props.post;
+    let { id, comments, removeComment, addComment } = this.props;
     let editForm;
 
+    // html for for edit post form if showEdit is true
     if (this.state.showEdit) {
       editForm = (
-      <div>
-        <hr/>
-        <PostFormContainer 
-          title={this.props.post.title} 
-          id={this.props.id} 
-          body={this.props.post.body}
-          description={this.props.post.description} 
-          isEditingPost={true} />
-      </div>
-        
-      )
+        <div>
+          <hr />
+          <PostFormContainer
+            title={title}
+            id={id}
+            body={body}
+            description={description}
+            isEditingPost={true} />
+        </div>
+
+      );
     }
 
-    let commentList = this.props.comments.map(comment => (
-      <Comment key={comment[0]} id={comment[0]} removeComment={this.props.removeComment}text={comment[1].text}/>
-    ))
+    // html for comments list / individual comment associated to post
+    let commentList = comments.map(comment => (
+      <Comment
+        key={comment[0]}
+        id={comment[0]}
+        removeComment={removeComment}
+        text={comment[1].text}
+      />
+    ));
 
     return (
       <div>
-
         <div className="header">
-          <h1>{this.props.post.title}</h1>
+          <h1>{title}</h1>
           <div className="">
-            <button onClick={this.showForm} className="btn btn-default btn-lg"><i className="far fa-edit text-primary"></i></button>
-            <button onClick={this.handleRemove} className="btn btn-default btn-lg"><i className="far fa-trash-alt text-danger"></i></button>
+            <button
+              onClick={this.showForm}
+              className="btn btn-default btn-lg">
+              <i className="far fa-edit text-primary"></i>
+            </button>
+            <button
+              onClick={this.handleRemovePost}
+              className="btn btn-default btn-lg">
+              <i className="far fa-trash-alt text-danger"></i>
+            </button>
           </div>
         </div>
-        <p>{this.props.post.description}</p>
-        <p>{this.props.post.body}</p>
-        <hr/>
+        <p>{description}</p>
+        <p>{body}</p>
+
+        <hr />
         <h3>Comments</h3>
         {commentList}
-        <CommentForm postId={this.props.id} addComment={this.props.addComment}/>
+        <CommentForm postId={id} addComment={addComment} />
 
         {editForm}
       </div>

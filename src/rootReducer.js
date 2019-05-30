@@ -1,5 +1,5 @@
 import { ADD_POST, REMOVE_POST, EDIT_POST, ADD_COMMENT, REMOVE_COMMENT } from "./actionTypes";
-import uuid from 'uuid/v4'
+import uuid from 'uuid/v4';
 
 const INITIAL_STATE = {
   posts: {
@@ -37,37 +37,36 @@ const INITIAL_STATE = {
 function rootReducer(state = INITIAL_STATE, action) {
   console.log("reducer ran; state & action:", state, action);
 
-  let posts = { ...state.posts }
-  let comments = { ...state.comments }
+  let posts = { ...state.posts };
+  let comments = { ...state.comments };
+
+  // TODO - figure out something for id later...
 
   switch (action.type) {
-    case ADD_POST:
-      let id = uuid()
-      posts[id] = action.payload
-      return { ...state, posts };
+  case ADD_POST:
+    let id = uuid();
+    posts[id] = action.payload;
+    return { ...state, posts };
 
-    case REMOVE_POST:
-      console.log("REMOVED")
-      delete posts[action.payload]
-      return {...state, posts}
+  case REMOVE_POST:
+    delete posts[action.payload];
+    return {...state, posts};
 
-    case EDIT_POST:
-      console.log("EDIT")
-      return state
+  //TODO - do not feel like doing.
+  case EDIT_POST:
+    return state;
 
-    case ADD_COMMENT:
-      console.log("COMMENT")
-      let commentId = uuid()
-      comments[commentId] = action.payload
-      return {...state, comments }
+  case ADD_COMMENT:
+    let commentId = uuid();
+    comments[commentId] = action.payload;
+    return {...state, comments };
     
-      case REMOVE_COMMENT:
-      console.log("REMOVE COMMENT");
-      delete comments[action.payload]
-      return {...state, comments}
+  case REMOVE_COMMENT:
+    delete comments[action.payload];
+    return {...state, comments};
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }
 // end

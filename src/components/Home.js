@@ -1,30 +1,23 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PostCard from "./PostCard";
 
 class Home extends Component {
-
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {};
-  // }
-
   render() {
-    let { posts } = this.props
+    let { posts } = this.props;
 
+    // get single post details and pass down to individual PostCard component
     let postCards = Object.keys(posts).map(key => (
-      <PostCard key={key} id={key} title={posts[key].title} description={posts[key].description} />
+      <PostCard
+        key={key}
+        id={key}
+        title={posts[key].title}
+        description={posts[key].description}
+      />
     ));
 
-
     return (
-
-
       <div className="row">
-       
-        { postCards }
-
-       
+        {postCards}
       </div>
 
     );
