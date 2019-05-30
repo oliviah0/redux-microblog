@@ -5,7 +5,7 @@ import Routes from "./components/Routes";
 
 function App() {
   return (
-    <div className="App container">
+    <div className="App container mt-2 mb-5">
       <Nav />
       <Routes />
     </div>

@@ -22,7 +22,6 @@ class Post extends Component {
       editForm = (
       <div>
         <hr/>
-        <h3>Edit Post</h3>
         <PostFormContainer 
           title={this.props.post.title} 
           id={this.props.post.id} 
@@ -36,7 +35,7 @@ class Post extends Component {
     return (
       <div>
 
-        <div id="header">
+        <div className="header">
           <h1>{this.props.post.title}</h1>
           <div className="">
             <button onClick={this.showForm} className="btn btn-default btn-lg"><i className="far fa-edit text-primary"></i></button>
