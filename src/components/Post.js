@@ -12,10 +12,24 @@ class Post extends Component {
   }
 
   showForm() {
-    this.setState({ showEdit: true })
+    this.setState({ showEdit: !this.state.showEdit })
   }
 
+
+
   render() {
+    let editForm;
+
+    if (this.state.showEdit) {
+      editForm = (
+        <PostFormContainer 
+          title={this.props.post.title} 
+          id={this.props.post.id} 
+          body={this.props.post.body}
+          description={this.props.post.description} 
+          isEditingPost={true} />
+      )
+    }
     return (
       <div>
 
@@ -29,12 +43,7 @@ class Post extends Component {
         <p>{this.props.post.description}</p>
         <p>{this.props.post.body}</p>
 
-        <PostFormContainer 
-          title={this.props.post.title} 
-          id={this.props.post.id} 
-          body={this.props.post.body}
-          description={this.props.post.description} 
-          isEditingPost={true} />
+        {editForm}
       </div>
     );
   }
