@@ -10,9 +10,9 @@ class Nav extends Component {
         <div className="header">
           <div>
             <h1 className="display-1">Pringle Mingle</h1>
-            <blockquote class="blockquote">
+            <blockquote className="blockquote">
               {/* <p class="mb-0">ಥ◡ಥ</p> */}
-              <footer class="blockquote-footer">Haley and Olivia</footer>
+              <footer className="blockquote-footer">Haley and Olivia</footer>
             </blockquote>
           </div>
           <div>

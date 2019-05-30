@@ -12,8 +12,8 @@ class Home extends Component {
   render() {
     let { posts } = this.props
 
-    let postCards = posts.map(post => (
-      <PostCard key={post.id} id={post.id} title={post.title} description={post.description} />
+    let postCards = Object.keys(posts).map(key => (
+      <PostCard key={key} id={key} title={posts[key].title} description={posts[key].description} />
     ));
 
 
