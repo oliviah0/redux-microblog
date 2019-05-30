@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 // import "./PostForm.css";
 
 class PostForm extends Component {
@@ -25,18 +26,27 @@ class PostForm extends Component {
     console.log("WE SUBMITTED FORM", this.props)
 
     // check if we came from editing post page
-    this.props.isEditingPost ? this.props.editPost( this.state ) : this.props.addPost( this.state );
-    this.props.history.push("/");
-    // untoggle form, if editing and stay on post page
+    if (this.props.isEditingPost) {
+      // untoggle form, if editing and stay on post page
+      this.props.editPost(this.state)
+      window.location.reload();
+    // <Redirect to = {`/${this.props.id}`} />
+    // this.props.history.push(`/${this.props.id}`);
+
+  } else {
+  this.props.addPost(this.state);
+  this.props.history.push("/");
+}
   }
 
-  render() {
-    return (
+render() {
+  console.log("PROPS", this.props)
+  return (
     <form onSubmit={this.handleSubmit}>
       <div className="form-group">
         <label htmlFor="title">Title</label>
-        <input 
-          className="form-control" 
+        <input
+          className="form-control"
           id="title"
           name="title"
           placeholder="Enter a title"
@@ -46,9 +56,9 @@ class PostForm extends Component {
       </div>
       <div className="form-group">
         <label htmlFor="description">Description</label>
-        <input 
-          className="form-control" 
-          id="description" 
+        <input
+          className="form-control"
+          id="description"
           name="description"
           placeholder="description"
           onChange={this.handleChange}
@@ -57,8 +67,8 @@ class PostForm extends Component {
       </div>
       <div className="form-group">
         <label htmlFor="body">Body</label>
-        <textarea 
-          className="form-control" 
+        <textarea
+          className="form-control"
           id="body"
           name="body"
           onChange={this.handleChange}
@@ -67,8 +77,8 @@ class PostForm extends Component {
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
-    );
-  }
+  );
+}
 }
 
 export default PostForm;
