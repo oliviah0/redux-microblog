@@ -1,20 +1,32 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import uuid from "uuid/v4";
+import PostCard from "./PostCard";
 
 class Home extends Component {
-  static defaultProps = {}
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {};
+  // }
 
   render() {
+    let { posts } = this.props
+
+    let postCards = posts.map(post => (
+      <PostCard key={post.id} id={post.id} title={post.title} description={post.description} />
+    ));
+
+
     return (
-      <div>
-        
+
+
+      <div className="row">
+       
+        { postCards }
+
+       
       </div>
+
     );
   }
 }

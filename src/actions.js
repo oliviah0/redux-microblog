@@ -1,9 +1,9 @@
 import { ADD_POST, REMOVE_POST, EDIT_POST } from "./actionTypes";
 
-export function addPost(content) {
+export function addPost(payload) {
   return {
     type: ADD_POST,
-    payload: {content}
+    payload
 
   };
 }

@@ -20,8 +20,8 @@ class PostForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log("WE SUBMITTED FORM", this.props)
-    // this.props.add###({ this.state });
-    // this.props.history.push("/somewhere");
+    this.props.addPost( this.state );
+    this.props.history.push("/");
   }
 
   render() {
@@ -32,6 +32,7 @@ class PostForm extends Component {
         <input 
           className="form-control" 
           id="title"
+          name="title"
           placeholder="Enter a title"
           onChange={this.handleChange}
           value={this.state.title}
@@ -42,6 +43,7 @@ class PostForm extends Component {
         <input 
           className="form-control" 
           id="description" 
+          name="description"
           placeholder="description"
           onChange={this.handleChange}
           value={this.state.description}
@@ -52,6 +54,7 @@ class PostForm extends Component {
         <textarea 
           className="form-control" 
           id="body"
+          name="body"
           onChange={this.handleChange}
           value={this.state.body}
         />
