@@ -2,12 +2,15 @@ import React, { Component } from "react";
 // import "./PostForm.css";
 
 class PostForm extends Component {
+
+
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      description: "",
-      body: ""
+      title: this.props.title,
+      description: this.props.description,
+      body: this.props.body
+
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,8 +23,11 @@ class PostForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log("WE SUBMITTED FORM", this.props)
-    this.props.addPost( this.state );
+
+    // check if we came from editing post page
+    this.props.isEditingPost ? this.props.editPost( this.state ) : this.props.addPost( this.state );
     this.props.history.push("/");
+    // untoggle form, if editing and stay on post page
   }
 
   render() {
