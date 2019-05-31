@@ -28,7 +28,7 @@ class PostForm extends Component {
       this.props.toggleEditForm();
 
     } else {
-      this.props.addPost({ ...this.state, comments: [] });
+      this.props.addPostToAPI({ ...this.state });
       this.props.history.push("/");
     }
   }

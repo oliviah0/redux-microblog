@@ -1,18 +1,18 @@
 import { ADD_POST, REMOVE_POST, EDIT_POST, ADD_COMMENT, REMOVE_COMMENT, LOAD_POSTS, LOAD_TITLES } from "./actionTypes";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "http://localhost:5000/api/posts";
 
 
 export function getTitlesFromAPI() {
   return async function(dispatch) {
 
     // asynchronously get posts from backend
-    let res = await axios.get(`${BASE_URL}/api/posts/`);
+    let res = await axios.get(`${BASE_URL}`);
 
     // asynchronously call backend for each post w/comments
     let promises = res.data.map(title => {
-      return axios.get(`${BASE_URL}/api/posts/${title.id}`);
+      return axios.get(`${BASE_URL}/${title.id}`);
     });
 
     //await untill all API requests return
@@ -21,13 +21,30 @@ export function getTitlesFromAPI() {
     // convert posts array into a object with id as the key
     let postObj = {};
     for (let item of posts) {
-      let p = item.data;
-      postObj[p.id] = p;
-      delete postObj[p.id].id;
+      postObj[item.data.id] = item.data;
     }
+
     dispatch(gotPosts(postObj));
     dispatch(gotTitles(res.data));
 
+  };
+}
+
+
+export function removePostFromAPI(id) {
+  return async function(dispatch) {
+    await axios.delete(`${BASE_URL}/${id}`);
+    dispatch(removePost(id));
+
+  };
+}
+
+export function addPostToAPI(data) {
+  return async function(dispatch) {
+    let res = await axios.post(`${BASE_URL}`, data);
+
+    console.log("NEW POST", res.data);
+    dispatch(addPost(res.data));
   };
 }
 
@@ -46,10 +63,10 @@ function gotPosts(posts) {
 }
 
 
-export function addPost(payload) {
+export function addPost(data) {
   return {
     type: ADD_POST,
-    payload
+    payload: data
   };
 }
 

@@ -3,7 +3,13 @@ import PostCard from "./PostCard";
 
 class Home extends Component {
   componentDidMount(){
-    this.props.getTitlesFromAPI();
+
+    // check if we have a current state 
+    // when you delete a post and it pushes back to home, it remounts this page causing componentDidMount to rerender.
+    if (this.props.posts.length === 0) {
+      this.props.getTitlesFromAPI();
+
+    }
   }
 
   render() {

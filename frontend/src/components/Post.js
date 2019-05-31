@@ -19,7 +19,7 @@ class Post extends Component {
   }
 
   handleRemovePost() {
-    this.props.removePost(this.props.id);
+    this.props.removePostFromAPI(this.props.id);
     this.props.history.push('/');
   }
 

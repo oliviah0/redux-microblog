@@ -26,28 +26,30 @@ function rootReducer(state = INITIAL_STATE, action) {
   console.log("reducer ran; state & action:", state, action);
 
   let posts = { ...state.posts };
+  let titles = [ ...state.titles ];
   let newComments;
   let newComment;
   let tempId;
+  let newTitles;
 
   // TODO - figure out something for id later...
   switch (action.type) {
     
   case LOAD_TITLES:
-    console.log("LOOK HER", action.payload);
     return { ...state, titles: action.payload};
 
   case LOAD_POSTS:
     return { ...state, posts: action.payload};
       
   case ADD_POST:
-    tempId = uuid();
-    posts[tempId] = action.payload;
-    return { ...state, posts };
+    posts[action.payload.id] = { ...action.payload, comments: []};
+    newTitles = [...titles, action.payload];
+    return { ...state, posts, titles: newTitles };
 
   case REMOVE_POST:
+    newTitles = titles.filter(title => title.id !== action.payload);
     delete posts[action.payload];
-    return { ...state, posts };
+    return { ...state, posts, titles: newTitles };
 
     //TODO - do not feel like doing.
   case EDIT_POST:
