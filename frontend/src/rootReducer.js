@@ -1,22 +1,24 @@
-import { ADD_POST, REMOVE_POST, EDIT_POST, ADD_COMMENT, REMOVE_COMMENT } from "./actionTypes";
+import { ADD_POST, REMOVE_POST, EDIT_POST, ADD_COMMENT, REMOVE_COMMENT, LOAD_POSTS, LOAD_TITLES } from "./actionTypes";
 import uuid from 'uuid/v4';
 
 const INITIAL_STATE = {
-  posts: {
-    1: {
-      title: "The Good Song",
-      description: "A really good song",
-      body: "Songs about life that make you appreciate the good things.",
-      comments: [{ id: 3, text: 'example2' }, { id: 4, text: 'example2' }]
+  posts: {},
+  titles: []
+  // posts: {
+  //   1: {
+  //     title: "The Good Song",
+  //     description: "A really good song",
+  //     body: "Songs about life that make you appreciate the good things.",
+  //     comments: [{ id: 3, text: 'example2' }, { id: 4, text: 'example2' }]
 
-    },
-    2: {
-      title: "The Shoe",
-      description: "A story about shoes that Haley likes",
-      body: "There was this pair of shoes that Haley had to have. They had hints of pink and purple on the sole. She needs them...",
-      comments: [{ id: 1, text: 'great' }, { id: 2, text: 'great2' }]
-    }
-  },
+  //   },
+  //   2: {
+  //     title: "The Shoe",
+  //     description: "A story about shoes that Haley likes",
+  //     body: "There was this pair of shoes that Haley had to have. They had hints of pink and purple on the sole. She needs them...",
+  //     comments: [{ id: 1, text: 'great' }, { id: 2, text: 'great2' }]
+  //   }
+  // },
 
 };
 
@@ -30,6 +32,14 @@ function rootReducer(state = INITIAL_STATE, action) {
 
   // TODO - figure out something for id later...
   switch (action.type) {
+    
+  case LOAD_TITLES:
+    console.log("LOOK HER", action.payload);
+    return { ...state, titles: action.payload};
+
+  case LOAD_POSTS:
+    return { ...state, posts: action.payload};
+      
   case ADD_POST:
     tempId = uuid();
     posts[tempId] = action.payload;
