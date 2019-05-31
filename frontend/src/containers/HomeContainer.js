@@ -5,6 +5,7 @@ import { getTitlesFromAPI } from "../actions";
 function mapStateToProps(state) {
   return {
     posts: state.titles
+    // loading: state.loading
   };
 }
 

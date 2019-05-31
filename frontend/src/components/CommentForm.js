@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Redirect } from "react-router-dom";
 
 export default class CommentForm extends Component {
   constructor(props) {
@@ -19,10 +18,8 @@ export default class CommentForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    // create a new comment record and add to our global state
-    this.props.addComment(this.state, this.props.postId);
-
-    //TODO - figure out how to rerender post page to show new comment
+    // create a new comment record and adds to our global state
+    this.props.addCommentToAPI(this.state, this.props.postId);
     this.setState({ text: '' });
   }
 

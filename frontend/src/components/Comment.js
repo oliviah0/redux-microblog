@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class Comment extends Component {
   handleRemove = () => {
-    this.props.removeComment(this.props.id, this.props.postId);
+    this.props.removeCommentFromAPI(this.props.id, this.props.postId);
   }
 
   render() {

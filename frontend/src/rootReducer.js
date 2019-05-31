@@ -1,25 +1,18 @@
-import { ADD_POST, REMOVE_POST, EDIT_POST, ADD_COMMENT, REMOVE_COMMENT, LOAD_POSTS, LOAD_TITLES } from "./actionTypes";
-import uuid from 'uuid/v4';
+import { 
+  ADD_POST, 
+  REMOVE_POST, 
+  EDIT_POST, 
+  ADD_COMMENT, 
+  REMOVE_COMMENT, 
+  LOAD_POSTS, 
+  LOAD_TITLES, 
+  // SHOW_SPINNER 
+} from "./actionTypes";
 
 const INITIAL_STATE = {
   posts: {},
-  titles: []
-  // posts: {
-  //   1: {
-  //     title: "The Good Song",
-  //     description: "A really good song",
-  //     body: "Songs about life that make you appreciate the good things.",
-  //     comments: [{ id: 3, text: 'example2' }, { id: 4, text: 'example2' }]
-
-  //   },
-  //   2: {
-  //     title: "The Shoe",
-  //     description: "A story about shoes that Haley likes",
-  //     body: "There was this pair of shoes that Haley had to have. They had hints of pink and purple on the sole. She needs them...",
-  //     comments: [{ id: 1, text: 'great' }, { id: 2, text: 'great2' }]
-  //   }
-  // },
-
+  titles: [], 
+  // loading: false
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -29,10 +22,9 @@ function rootReducer(state = INITIAL_STATE, action) {
   let titles = [ ...state.titles ];
   let newComments;
   let newComment;
-  let tempId;
   let newTitles;
+  let updatedTitles;
 
-  // TODO - figure out something for id later...
   switch (action.type) {
     
   case LOAD_TITLES:
@@ -42,17 +34,37 @@ function rootReducer(state = INITIAL_STATE, action) {
     return { ...state, posts: action.payload};
       
   case ADD_POST:
+
+    // adds post to post state object
     posts[action.payload.id] = { ...action.payload, comments: []};
+
+    //adds title to to title state array
     newTitles = [...titles, action.payload];
     return { ...state, posts, titles: newTitles };
 
   case REMOVE_POST:
+
+    //filters through titles to remove post
     newTitles = titles.filter(title => title.id !== action.payload);
+    
+    //deletes post from posts state
     delete posts[action.payload];
     return { ...state, posts, titles: newTitles };
 
-    //TODO - do not feel like doing.
   case EDIT_POST:
+
+    //find single post and update title object
+    updatedTitles = titles.map(title => {
+        if(title.id === action.payload.id){
+          return {
+            id: action.payload.content.id, 
+            title: action.payload.content.title, 
+            description: action.payload.content.description}
+        } else {
+          return title
+        }
+      });
+
     return {
       ...state,
       posts: {
@@ -62,12 +74,12 @@ function rootReducer(state = INITIAL_STATE, action) {
           description: action.payload.content.description,
           body: action.payload.content.body
         }
-      }
+      }, 
+      titles: updatedTitles
     };
 
   case ADD_COMMENT:
-    tempId = uuid();
-    newComment = { ...action.payload.text, id: tempId };
+    newComment = { ...action.payload.text };
 
     return {
       ...state,
@@ -80,7 +92,11 @@ function rootReducer(state = INITIAL_STATE, action) {
     };
 
   case REMOVE_COMMENT:
-    newComments = posts[action.payload.postId].comments.filter(comment => comment.id !== action.payload.commentId);
+
+    // filters through posts, removes the comment with matching comment id
+    newComments = posts[action.payload.postId].comments.filter(
+      comment => comment.id !== action.payload.commentId
+    );
 
     return {
       ...state,
@@ -91,6 +107,10 @@ function rootReducer(state = INITIAL_STATE, action) {
       }
     };
 
+  // case SHOW_SPINNER:
+  //   return {
+  //     ...state, loading: !state.loading
+  //   }
 
   default:
     return state;

@@ -8,7 +8,7 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showEdit: false
+      showEdit: false,
     };
     this.toggleEditForm = this.toggleEditForm.bind(this);
     this.handleRemovePost = this.handleRemovePost.bind(this);
@@ -25,7 +25,7 @@ class Post extends Component {
 
   render() {
     let { title, body, description, comments } = this.props.post;
-    let { id, removeComment, addComment } = this.props;
+    let { id, removeCommentFromAPI, addCommentToAPI } = this.props;
     let editForm;
 
     // html for for edit post form if showEdit is true
@@ -46,45 +46,47 @@ class Post extends Component {
     }
 
     // html for comments list / individual comment associated to post
-
-
     let commentList = comments.map(comment => (
       <Comment
         key={comment.id}
         id={comment.id}
         postId={id}
-        removeComment={removeComment}
+        removeCommentFromAPI={removeCommentFromAPI}
         text={comment.text}
       />
     ));
 
+    let postRender = (<div>
+      <div className="header">
+        <h1>{title}</h1>
+        <div className="">
+          <button
+            onClick={this.toggleEditForm}
+            className="btn btn-default btn-lg">
+            <i className="far fa-edit text-primary"></i>
+          </button>
+          <button
+            onClick={this.handleRemovePost}
+            className="btn btn-default btn-lg">
+            <i className="far fa-trash-alt text-danger"></i>
+          </button>
+        </div>
+      </div>
+      <p>{description}</p>
+      <p>{body}</p>
+
+      <h4 className="mt-5">Comments</h4>
+      <ul class="list-group list-group-flush mb-3">
+        {commentList}
+      </ul>
+      <CommentForm postId={id} addCommentToAPI={addCommentToAPI} />
+
+      {editForm}
+    </div>)
+
     return (
       <div>
-        <div className="header">
-          <h1>{title}</h1>
-          <div className="">
-            <button
-              onClick={this.toggleEditForm}
-              className="btn btn-default btn-lg">
-              <i className="far fa-edit text-primary"></i>
-            </button>
-            <button
-              onClick={this.handleRemovePost}
-              className="btn btn-default btn-lg">
-              <i className="far fa-trash-alt text-danger"></i>
-            </button>
-          </div>
-        </div>
-        <p>{description}</p>
-        <p>{body}</p>
-
-        <h4 className="mt-5">Comments</h4>
-        <ul class="list-group list-group-flush mb-3">
-          {commentList}
-        </ul>
-        <CommentForm postId={id} addComment={addComment} />
-
-        {editForm}
+        {!this.props.loading ? postRender :  <p>Content is loading...</p> }
       </div>
     );
   }

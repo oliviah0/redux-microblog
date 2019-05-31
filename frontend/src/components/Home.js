@@ -3,8 +3,7 @@ import PostCard from "./PostCard";
 
 class Home extends Component {
   componentDidMount(){
-
-    // check if we have a current state 
+    
     // when you delete a post and it pushes back to home, it remounts this page causing componentDidMount to rerender.
     if (this.props.posts.length === 0) {
       this.props.getTitlesFromAPI();
@@ -13,7 +12,7 @@ class Home extends Component {
   }
 
   render() {
-    //this is state.titles
+    //posts refers to state.titles
     let { posts } = this.props;
 
     // get single post details and pass down to individual PostCard component

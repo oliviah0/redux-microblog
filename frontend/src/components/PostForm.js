@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { Redirect } from "react-router-dom";
 
 class PostForm extends Component {
   constructor(props) {
@@ -24,7 +23,7 @@ class PostForm extends Component {
 
     // determine how to process add new or edit post
     if (this.props.isEditingPost) {
-      this.props.editPost(this.props.id, this.state);
+      this.props.updatePostToAPI(this.props.id, this.state);
       this.props.toggleEditForm();
 
     } else {
