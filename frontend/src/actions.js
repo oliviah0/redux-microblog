@@ -20,15 +20,12 @@ export function getTitlesFromAPI() {
   return async function (dispatch) {
     // dispatch(startLoad());
     try{
-      // asynchronously get posts from backend
       let res = await axios.get(`${BASE_URL}`);
   
-      // asynchronously call backend for each post w/comments
       let promises = res.data.map(title => {
         return axios.get(`${BASE_URL}/${title.id}`);
       });
   
-      //await untill all API requests return
       let posts = await Promise.all(promises);
   
       // convert posts array into a object with id as the key

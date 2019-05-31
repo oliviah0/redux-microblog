@@ -7,7 +7,7 @@ export default class Comment extends Component {
 
   render() {
     return (
-      <li class="list-group-item">
+      <li className="list-group-item">
         <button
           onClick={this.handleRemove}
           className='btn btn-default'>

@@ -4,12 +4,10 @@ import {
   editPost, 
   removePostFromAPI, 
   addCommentToAPI, 
-  removeCommentFromAPI, 
-  startLoad
+  removeCommentFromAPI
 } from "../actions";
 
 function mapStateToProps(state, ownProps) {
-  startLoad();
   let id = Number(ownProps.match.params.id);
   let post = state.posts[id];
 
