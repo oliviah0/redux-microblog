@@ -5,9 +5,9 @@ class PostCard extends Component {
   render() {
     let { id, title, description } = this.props;
     return (
-      <div className="col-sm-4">
+      <div className="col-sm-3">
         <div className="card"
-          style={{ "width": "18rem", "display": "inline-block", "height": "15rem" }}>
+          style={{ "width": "15rem", "display": "inline-block", "height": "10rem" }}>
           <div className="card-body">
             <Link
               to={`/${id}`}>

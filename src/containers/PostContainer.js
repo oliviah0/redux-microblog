@@ -6,13 +6,9 @@ function mapStateToProps(state, ownProps) {
   let id = ownProps.match.params.id;
   let post = state.posts[id];
 
-  // get each comment records associated to the post
-  let comments = Object.entries(state.comments).filter(comment => comment[1].post_id === id);
-
   return {
     id,
     post,
-    comments
   };
 }
 

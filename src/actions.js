@@ -15,23 +15,23 @@ export function removePost(id) {
   };
 }
 
-export function editPost(id) {
+export function editPost(id, content) {
   return {
     type: EDIT_POST,
-    payload: id
+    payload: {id, content}
   };
 }
 
-export function addComment(payload) {
+export function addComment(text, postId) {
   return {
     type: ADD_COMMENT,
-    payload 
+    payload: { text, postId }
   };
 }
 
-export function removeComment(commentId) {
+export function removeComment(commentId, postId) {
   return {
     type: REMOVE_COMMENT,
-    payload: commentId
+    payload: { commentId, postId }
   };
 }

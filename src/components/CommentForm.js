@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { Redirect } from "react-router-dom";
 
 export default class CommentForm extends Component {
   constructor(props) {
@@ -17,15 +18,12 @@ export default class CommentForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    
+
     // create a new comment record and add to our global state
-    let commentObj = {...this.state, id: this.props.postId};
-    this.props.addComment(commentObj);
+    this.props.addComment(this.state, this.props.postId);
 
     //TODO - figure out how to rerender post page to show new comment
-    this.setState({
-      text: ''
-    });
+    this.setState({ text: '' });
   }
 
   render() {
@@ -33,17 +31,17 @@ export default class CommentForm extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <input 
-              onChange={this.handleChange} 
-              name="text" 
-              className="form-control" 
-              value={this.state.text} 
-              placeholder="New Comment" 
+            <textarea
+              onChange={this.handleChange}
+              name="text"
+              className="form-control"
+              value={this.state.text}
+              placeholder="Add a new comment..."
             />
           </div>
-          <button 
-            type="submit" 
-            className="btn btn-primary">Submit
+          <button
+            type="submit"
+            className="btn btn-primary">Add Comment
           </button>
         </form>
       </div>

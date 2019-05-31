@@ -10,11 +10,11 @@ class Post extends Component {
     this.state = {
       showEdit: false
     };
-    this.showForm = this.showForm.bind(this);
+    this.toggleEditForm = this.toggleEditForm.bind(this);
     this.handleRemovePost = this.handleRemovePost.bind(this);
   }
 
-  showForm() {
+  toggleEditForm() {
     this.setState({ showEdit: !this.state.showEdit });
   }
 
@@ -24,8 +24,8 @@ class Post extends Component {
   }
 
   render() {
-    let { title, body, description } = this.props.post;
-    let { id, comments, removeComment, addComment } = this.props;
+    let { title, body, description, comments } = this.props.post;
+    let { id, removeComment, addComment } = this.props;
     let editForm;
 
     // html for for edit post form if showEdit is true
@@ -38,19 +38,23 @@ class Post extends Component {
             id={id}
             body={body}
             description={description}
-            isEditingPost={true} />
+            isEditingPost={true}
+            toggleEditForm={this.toggleEditForm} />
         </div>
 
       );
     }
 
     // html for comments list / individual comment associated to post
+
+
     let commentList = comments.map(comment => (
       <Comment
-        key={comment[0]}
-        id={comment[0]}
+        key={comment.id}
+        id={comment.id}
+        postId={id}
         removeComment={removeComment}
-        text={comment[1].text}
+        text={comment.text}
       />
     ));
 
@@ -60,7 +64,7 @@ class Post extends Component {
           <h1>{title}</h1>
           <div className="">
             <button
-              onClick={this.showForm}
+              onClick={this.toggleEditForm}
               className="btn btn-default btn-lg">
               <i className="far fa-edit text-primary"></i>
             </button>
@@ -74,9 +78,10 @@ class Post extends Component {
         <p>{description}</p>
         <p>{body}</p>
 
-        <hr />
-        <h3>Comments</h3>
-        {commentList}
+        <h4 className="mt-5">Comments</h4>
+        <ul class="list-group list-group-flush mb-3">
+          {commentList}
+        </ul>
         <CommentForm postId={id} addComment={addComment} />
 
         {editForm}

@@ -7,11 +7,12 @@ class PostForm extends Component {
     this.state = {
       title: this.props.title,
       description: this.props.description,
-      body: this.props.body
+      body: this.props.body,
 
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   handleChange(e) {
@@ -23,17 +24,17 @@ class PostForm extends Component {
 
     // determine how to process add new or edit post
     if (this.props.isEditingPost) {
-      this.props.editPost(this.state);
-
-      // TODO: figure out how to rerender the page to untoggle form area on post and updated content
-      window.location.reload();
-      // <Redirect to = {`/${this.props.id}`} />
-      // this.props.history.push(`/${this.props.id}`);
+      this.props.editPost(this.props.id, this.state);
+      this.props.toggleEditForm();
 
     } else {
-      this.props.addPost(this.state);
+      this.props.addPost({ ...this.state, comments: [] });
       this.props.history.push("/");
     }
+  }
+
+  handleCancel() {
+    this.props.history.push("/");
   }
 
   render() {
@@ -43,7 +44,7 @@ class PostForm extends Component {
     return (
       <div>
 
-        <h3 className="mb-4">{formTitle}</h3>
+        <h4 className="mb-4">{formTitle}</h4>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
@@ -54,6 +55,7 @@ class PostForm extends Component {
               placeholder="Enter a title"
               onChange={this.handleChange}
               value={title}
+              required
             />
           </div>
           <div className="form-group">
@@ -62,7 +64,7 @@ class PostForm extends Component {
               className="form-control"
               id="description"
               name="description"
-              placeholder="description"
+              placeholder="Enter a description"
               onChange={this.handleChange}
               value={description}
             />
@@ -73,11 +75,14 @@ class PostForm extends Component {
               className="form-control"
               id="body"
               name="body"
+              placeholder="Add content"
               onChange={this.handleChange}
               value={body}
+              required
             />
           </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary mx-1">Save</button>
+          <button onClick={this.handleCancel} className="btn btn-secondary mx-1">Cancel</button>
         </form>
       </div>
     );
